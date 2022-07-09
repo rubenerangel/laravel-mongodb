@@ -12,7 +12,6 @@ services:
             - 'host.docker.internal:host-gateway'
         ports:
             - '${APP_PORT:-80}:80'
-            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
@@ -72,7 +71,7 @@ services:
         ports:
             - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
         volumes:
-            - 'sail-meilisearch:/meili_data'
+            - 'sail-meilisearch:/data.ms'
         networks:
             - sail
         healthcheck:

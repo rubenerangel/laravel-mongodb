@@ -6,14 +6,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
-    public function toArray($request)
+    public function toArray($request): array
     {
-        return parent::toArray($request);
+        return [
+            '_id'   => $this->id,
+            'title' => $this->title,
+            'isbn'  => $this->isbn,
+            'author'=> $this->author,
+            'published' => $this->published,
+            'published_at' => $this->published_at->format('d-m-Y')
+        ];
     }
 }

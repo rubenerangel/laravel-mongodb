@@ -9,11 +9,11 @@ class CreateBookPostControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** 
-     * @test 
+    /**
+     * @test
      * @group Books
      */
-    public function book_can_be_created() 
+    public function book_can_be_created()
     {
         $publishedAt = now()->subYear()->subDays(20);
         $title = 'Ajedrez con nariz de payaso';
@@ -29,6 +29,9 @@ class CreateBookPostControllerTest extends TestCase
 
         $response->assertStatus(204);
 
-        $this->assertDatabaseCount('books',1);
+        $this->assertDatabaseCount("books", 1);
+        $this->assertDatabaseHas("books", [
+            "title" => $title,
+        ]);
     }
 }
