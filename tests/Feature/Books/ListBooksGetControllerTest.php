@@ -13,6 +13,7 @@ class ListBooksGetControllerTest extends TestCase
     /**
      * @test
      * @group Books
+     * @throws \Throwable
      */
     public function books_paginated_can_be_listed() {
         $books = Book::factory(15)->create();
@@ -25,13 +26,18 @@ class ListBooksGetControllerTest extends TestCase
             "total" => $books->count()
         ]);
 
-        // $response->assertJsonFragment([
-        //     "total" => $books->first()->title,
-        // ]);
+        $response->assertJsonFragment([
+            "title" => $books->first()->title,
+        ]);
 
-        // $response()->assertJsonEstructure([
-        //     'data', 'links', 'meta'
-        // ]);
+        $response->assertJsonStructure([
+            'data', 'links', 'meta'
+        ]);
+        $data = $response->decodeResponseJson();
+
+        $this->assertSameSize($books, $data['data']);
+        $this->assertEquals($books->count(), $data['meta']['total']);
+        $this->assertDatabaseCount('books', $books->count());
     }
     
 }
