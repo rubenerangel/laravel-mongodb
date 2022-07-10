@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 #[Prefix('api/books')]
 class ListBooksGetController extends Controller
 {
-    #[Get('/')]
+    #[Get('/', middleware: 'auth:sanctum')]
     public function __invoke(Request $request)
     {
         $books = BookResource::collection(Book::paginate())->response()->getData(true);
